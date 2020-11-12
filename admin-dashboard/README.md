@@ -1,5 +1,6 @@
 ## Setting up Node-RED
 Follow the steps found on this link: https://github.com/IBM/ibmi-oss-examples/tree/master/nodejs/node-red
+I wrote a blog post to help you get started as well: https://ibmicommunity.thebeardedgeek.com/2020/07/setup-node-red-and-using-acs-http-proxy-on-ibm-i/
 
 ## Nodes needed from Palette to run this
  - Click the menu at the upper-right corner and click Manage palette
