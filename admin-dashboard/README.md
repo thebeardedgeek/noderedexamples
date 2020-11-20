@@ -18,6 +18,16 @@ node-red-node-ui-table
 ## Import this example
 - Click the menu at the upper-right corner and click Import->Clipboard.
 - Select the admindashboard.json file to import to current flow or select import to new flow.
+- Setup the database connection
+```
+1. Double-click on the Local_DB node
+2. Click on the pencil next to the Database field
+3. Complete the form. Enter the Connection Name, User, Password, and Database = *LOCAL 
+(this user can have restricted access to the system – I would recommend setting up a node user service account for this access)
+4. Click Update
+5. Click Done
+6. Update all of the Local_DB nodes (or any other database nodes that you have with this new connection)
+```
 - Click the deploy button at the upper-right corner
 - Visit http://yourip:1880/ui to see the dashboard
 
