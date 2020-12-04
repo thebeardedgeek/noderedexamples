@@ -1,3 +1,7 @@
+## Setting up your OSS Environment on IBM i
+This document is fantastic for helping people get started running an Open Source environment on IBM i: https://ibmi-oss-docs.readthedocs.io/en/latest/yum/README.html#general-information
+
+Here is another helpful post that I wrote for setting up BASH: https://ibmicommunity.thebeardedgeek.com/2020/07/setup-bash-on-ibm-i-and-make-it-friendly/
 ## Setting up Node-RED
 Follow the steps found on this link: https://github.com/IBM/ibmi-oss-examples/tree/master/nodejs/node-red
 I wrote a blog post to help you get started as well: https://ibmicommunity.thebeardedgeek.com/2020/07/setup-node-red-and-using-acs-http-proxy-on-ibm-i/
