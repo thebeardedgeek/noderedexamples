@@ -18,6 +18,7 @@ node-red-node-rbe
 node-red-node-tail
 node-red-node-ui-list
 node-red-node-ui-table
+node-red-contrib-summariser
 ```
 
 ## Import this example
