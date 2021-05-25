@@ -1,15 +1,15 @@
 [
     {
-        "id": "6e7a53d8.25db7c",
+        "id": "55102758.72fe98",
         "type": "tab",
-        "label": "IBMi_AdminDashboard",
+        "label": "Flow 1",
         "disabled": false,
         "info": ""
     },
     {
         "id": "d6d04246.043228",
         "type": "ui_chart",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "group": "24152ea0.f54a12",
         "order": 1,
@@ -41,10 +41,9 @@
             "#9467bd",
             "#c5b0d5"
         ],
-        "useOldStyle": false,
         "outputs": 1,
-        "x": 900,
-        "y": 440,
+        "x": 880,
+        "y": 360,
         "wires": [
             []
         ]
@@ -52,7 +51,7 @@
     {
         "id": "573a5509.0efd04",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Top 10 CPU consumers",
         "props": [
             {
@@ -66,24 +65,24 @@
         "topic": "",
         "payload": "SELECT JOB_NAME, ELAPSED_CPU_PERCENTAGE     FROM TABLE(ACTIVE_JOB_INFO()) x     ORDER BY ELAPSED_CPU_PERCENTAGE DESC     FETCH FIRST 10 ROWS ONLY;",
         "payloadType": "str",
-        "x": 250,
-        "y": 500,
+        "x": 230,
+        "y": 420,
         "wires": [
             [
-                "c79faa62.eb105"
+                "d14a5b2a.ba60b8"
             ]
         ]
     },
     {
         "id": "245059b9.fb47c6",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Prepare Data",
         "func": "var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseFloat(row.ELAPSED_CPU_PERCENTAGE) * 10);\n    m.labels.push(row.JOB_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"CPU usage\");\n\nreturn {payload:[m]};",
         "outputs": 1,
         "noerr": 0,
-        "x": 686,
-        "y": 460,
+        "x": 666,
+        "y": 380,
         "wires": [
             [
                 "d6d04246.043228"
@@ -93,7 +92,7 @@
     {
         "id": "5336e9ab.0578b",
         "type": "ui_chart",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "group": "24152ea0.f54a12",
         "order": 3,
@@ -125,10 +124,9 @@
             "#9467bd",
             "#c5b0d5"
         ],
-        "useOldStyle": false,
         "outputs": 1,
-        "x": 918,
-        "y": 499,
+        "x": 898,
+        "y": 419,
         "wires": [
             []
         ]
@@ -136,7 +134,7 @@
     {
         "id": "cc0bb852.9e5d4",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Top 10 Storage consumers",
         "props": [
             {
@@ -154,8 +152,8 @@
         "topic": "Storage",
         "payload": "SELECT A.AUTHORIZATION_NAME, SUM(A.STORAGE_USED) AS TOTAL_STORAGE_USED, B.TEXT_DESCRIPTION,     B.ACCOUNTING_CODE, B.MAXIMUM_ALLOWED_STORAGE     FROM QSYS2.USER_STORAGE A INNER     JOIN QSYS2.USER_INFO B ON B.USER_NAME = A.AUTHORIZATION_NAME     WHERE B.USER_NAME NOT LIKE 'Q%'     GROUP BY A.AUTHORIZATION_NAME, B.TEXT_DESCRIPTION, B.ACCOUNTING_CODE, B.MAXIMUM_ALLOWED_STORAGE     ORDER BY TOTAL_STORAGE_USED DESC     FETCH FIRST 10 ROWS ONLY;",
         "payloadType": "str",
-        "x": 240,
-        "y": 560,
+        "x": 220,
+        "y": 480,
         "wires": [
             [
                 "238c3e15.abc9da"
@@ -165,13 +163,13 @@
     {
         "id": "1b61bc82.c1b6fb",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Prepare Data",
         "func": "var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TOTAL_STORAGE_USED));\n    m.labels.push(row.AUTHORIZATION_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Storage usage\");\n\nreturn {payload:[m]};",
         "outputs": 1,
         "noerr": 0,
-        "x": 684,
-        "y": 519,
+        "x": 664,
+        "y": 439,
         "wires": [
             [
                 "5336e9ab.0578b"
@@ -181,7 +179,7 @@
     {
         "id": "a74f69b8.6aedc",
         "type": "ui_chart",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "group": "24152ea0.f54a12",
         "order": 2,
@@ -213,10 +211,9 @@
             "#9467bd",
             "#c5b0d5"
         ],
-        "useOldStyle": false,
         "outputs": 1,
-        "x": 939,
-        "y": 557,
+        "x": 919,
+        "y": 477,
         "wires": [
             []
         ]
@@ -224,7 +221,7 @@
     {
         "id": "cbe93654.9d5338",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Top 10 Temp Storage consumers",
         "props": [
             {
@@ -242,8 +239,8 @@
         "topic": "Memory",
         "payload": "SELECT JOB_NAME, AUTHORIZATION_NAME, TEMPORARY_STORAGE, J.*     FROM TABLE(QSYS2.ACTIVE_JOB_INFO()) J     WHERE JOB_TYPE <> 'SYS'     ORDER BY TEMPORARY_STORAGE DESC LIMIT 10;",
         "payloadType": "str",
-        "x": 220,
-        "y": 619,
+        "x": 200,
+        "y": 539,
         "wires": [
             [
                 "c171acb1.08aa4"
@@ -253,13 +250,13 @@
     {
         "id": "c0e9d322.d57fa8",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Prepare Data",
         "func": "var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TEMPORARY_STORAGE));\n    m.labels.push(row.JOB_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Temp storage usage\");\n\nreturn {payload:[m]};",
         "outputs": 1,
         "noerr": 0,
-        "x": 685,
-        "y": 577,
+        "x": 665,
+        "y": 497,
         "wires": [
             [
                 "a74f69b8.6aedc"
@@ -269,7 +266,7 @@
     {
         "id": "48a98bed.8e8484",
         "type": "ui_gauge",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "ASP",
         "group": "e348f2a4.8e18d8",
         "order": 2,
@@ -288,14 +285,14 @@
         ],
         "seg1": "70",
         "seg2": "90",
-        "x": 850,
-        "y": 280,
+        "x": 830,
+        "y": 200,
         "wires": []
     },
     {
         "id": "664e75fb.326cf4",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "ASP Usage",
         "props": [
             {
@@ -316,8 +313,8 @@
         "topic": "ASP",
         "payload": "WITH sysval(low_limit)     AS (SELECT current_numeric_value / 10000.0 AS QSTGLOWLMT             FROM qsys2.system_value_info             WHERE system_value_name = 'QSTGLOWLMT')     SELECT SYSTEM_ASP_USED FROM sysval, qsys2.SYSTEM_STATUS_INFO;",
         "payloadType": "str",
-        "x": 290,
-        "y": 340,
+        "x": 270,
+        "y": 260,
         "wires": [
             [
                 "2482abbd.7f1c6c"
@@ -327,12 +324,12 @@
     {
         "id": "2482abbd.7f1c6c",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 472,
-        "y": 325,
+        "x": 452,
+        "y": 245,
         "wires": [
             [
                 "c93de9bc.561a58"
@@ -342,13 +339,13 @@
     {
         "id": "c93de9bc.561a58",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Prepare Data",
         "func": "var value = parseInt(msg.payload[0].SYSTEM_ASP_USED);\nreturn {payload:[value]};",
         "outputs": 1,
         "noerr": 0,
-        "x": 665,
-        "y": 300,
+        "x": 645,
+        "y": 220,
         "wires": [
             [
                 "48a98bed.8e8484"
@@ -358,12 +355,12 @@
     {
         "id": "c171acb1.08aa4",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 489,
-        "y": 602,
+        "x": 469,
+        "y": 522,
         "wires": [
             [
                 "c0e9d322.d57fa8"
@@ -373,12 +370,12 @@
     {
         "id": "238c3e15.abc9da",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 488,
-        "y": 544,
+        "x": 468,
+        "y": 464,
         "wires": [
             [
                 "1b61bc82.c1b6fb"
@@ -386,25 +383,9 @@
         ]
     },
     {
-        "id": "c79faa62.eb105",
-        "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
-        "mydb": "1ffd3699.664899",
-        "name": "",
-        "arraymode": true,
-        "x": 480,
-        "y": 485,
-        "wires": [
-            [
-                "245059b9.fb47c6",
-                "69c2531.cee4cac"
-            ]
-        ]
-    },
-    {
         "id": "f8b51a52.3bc1e",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Scheduled Jobs for Current Day",
         "props": [
             {
@@ -422,8 +403,8 @@
         "topic": "Scheduled Jobs",
         "payload": "SELECT SCHEDULED_JOB_NAME,DESCRIPTION,SCHEDULED_TIME,COMMAND_STRING      FROM QSYS2.SCHEDULED_JOB_INFO      WHERE STATUS = 'SCHEDULED' and NEXT_SUBMISSION_DATE >= current date and SCHEDULED_TIME > current time     order by SCHEDULED_DATE,SCHEDULED_TIME;",
         "payloadType": "str",
-        "x": 220,
-        "y": 880,
+        "x": 200,
+        "y": 800,
         "wires": [
             [
                 "ef655996.256418"
@@ -433,12 +414,12 @@
     {
         "id": "ef655996.256418",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 485,
-        "y": 859,
+        "x": 465,
+        "y": 779,
         "wires": [
             [
                 "e1603ffb.672748"
@@ -448,7 +429,7 @@
     {
         "id": "e1603ffb.672748",
         "type": "ui_table",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "27537136.147efe",
         "name": "Scheduled Jobs for Current Day",
         "order": 2,
@@ -457,14 +438,14 @@
         "columns": [],
         "outputs": 0,
         "cts": false,
-        "x": 750,
-        "y": 840,
+        "x": 730,
+        "y": 760,
         "wires": []
     },
     {
         "id": "268cc955.e97366",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Job Queues with Active Jobs",
         "props": [
             {
@@ -482,8 +463,8 @@
         "topic": "Queues with Active Jobs",
         "payload": "select JOB_QUEUE_NAME, ACTIVE_JOBS, TEXT_DESCRIPTION from QSYS2.JOB_QUEUE_INFO where ACTIVE_JOBS > 0 order by JOB_QUEUE_NAME",
         "payloadType": "str",
-        "x": 230,
-        "y": 940,
+        "x": 210,
+        "y": 860,
         "wires": [
             [
                 "49583787.1b0418"
@@ -493,12 +474,12 @@
     {
         "id": "49583787.1b0418",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 485,
-        "y": 919,
+        "x": 465,
+        "y": 839,
         "wires": [
             [
                 "8b3e5c16.929338"
@@ -508,7 +489,7 @@
     {
         "id": "8b3e5c16.929338",
         "type": "ui_table",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "27537136.147efe",
         "name": "Job Queues with Active Jobs",
         "order": 4,
@@ -517,14 +498,14 @@
         "columns": [],
         "outputs": 0,
         "cts": false,
-        "x": 740,
-        "y": 900,
+        "x": 720,
+        "y": 820,
         "wires": []
     },
     {
         "id": "8445d4da.8e4078",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Disabled Users",
         "props": [
             {
@@ -542,8 +523,8 @@
         "topic": "DisabledUsers",
         "payload": "select AUTHORIZATION_NAME,to_char(PREVIOUS_SIGNON, 'dd Month yyyy hh24:miAM') as PREVIOUS_SIGNON,TEXT_DESCRIPTION from QSYS2.USER_INFO where STATUS = '*DISABLED' order by AUTHORIZATION_NAME;",
         "payloadType": "str",
-        "x": 270,
-        "y": 1053,
+        "x": 250,
+        "y": 973,
         "wires": [
             [
                 "f3a916c1.762278"
@@ -553,12 +534,12 @@
     {
         "id": "f3a916c1.762278",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 485,
-        "y": 1032,
+        "x": 465,
+        "y": 952,
         "wires": [
             [
                 "ed6e39df.5be19"
@@ -568,7 +549,7 @@
     {
         "id": "ed6e39df.5be19",
         "type": "ui_table",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "27537136.147efe",
         "name": "Disabled Users",
         "order": 8,
@@ -577,8 +558,8 @@
         "columns": [],
         "outputs": 1,
         "cts": true,
-        "x": 700,
-        "y": 1013,
+        "x": 680,
+        "y": 933,
         "wires": [
             [
                 "8e2725af.62e058",
@@ -592,7 +573,7 @@
     {
         "id": "5acfc99c.18ad6",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Subsystems Active",
         "props": [
             {
@@ -610,8 +591,8 @@
         "topic": "Subsystems",
         "payload": "select distinct concat(concat('<b>',subsystem_description),'</b>') as \"title\",text_description as \"description\",     case when status = 'ACTIVE' THEN 'swap_horiz'         when status = 'INACTIVE' THEN 'highlight_off'         END as \"icon_name\",         status       from qsys2.subsystem_info order by status, \"title\";",
         "payloadType": "str",
-        "x": 263,
-        "y": 292,
+        "x": 243,
+        "y": 212,
         "wires": [
             [
                 "5cbe12c7.d1ff3c"
@@ -621,12 +602,12 @@
     {
         "id": "5cbe12c7.d1ff3c",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 463,
-        "y": 272,
+        "x": 443,
+        "y": 192,
         "wires": [
             [
                 "b2fe341d.e0aa48"
@@ -636,7 +617,7 @@
     {
         "id": "b2fe341d.e0aa48",
         "type": "ui_list",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "e348f2a4.8e18d8",
         "name": "Subsystems",
         "order": 5,
@@ -647,8 +628,8 @@
         "allowHTML": true,
         "outputs": 1,
         "topic": "",
-        "x": 870,
-        "y": 200,
+        "x": 850,
+        "y": 120,
         "wires": [
             []
         ]
@@ -656,7 +637,7 @@
     {
         "id": "fd952907.da2d98",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Job Queues with Jobs Waiting",
         "props": [
             {
@@ -674,8 +655,8 @@
         "topic": "Queues with Jobs Waiting",
         "payload": "select JOB_QUEUE_NAME, NUMBER_OF_JOBS, TEXT_DESCRIPTION from QSYS2.JOB_QUEUE_INFO where NUMBER_OF_JOBS > 0 order by JOB_QUEUE_NAME",
         "payloadType": "str",
-        "x": 230,
-        "y": 1000,
+        "x": 210,
+        "y": 920,
         "wires": [
             [
                 "35c85595.c7d46a"
@@ -685,12 +666,12 @@
     {
         "id": "35c85595.c7d46a",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 485,
-        "y": 979,
+        "x": 465,
+        "y": 899,
         "wires": [
             [
                 "3d4cd38a.263eec"
@@ -700,7 +681,7 @@
     {
         "id": "3d4cd38a.263eec",
         "type": "ui_table",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "27537136.147efe",
         "name": "Job Queues with Jobs Waiting",
         "order": 6,
@@ -709,14 +690,14 @@
         "columns": [],
         "outputs": 0,
         "cts": false,
-        "x": 750,
-        "y": 960,
+        "x": 730,
+        "y": 880,
         "wires": []
     },
     {
         "id": "37439cdb.08c804",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Users with Invalid Sign on Attempts",
         "props": [
             {
@@ -734,8 +715,8 @@
         "topic": "Invalid_Users",
         "payload": "SELECT J.AUTHORIZATION_NAME, J.SIGN_ON_ATTEMPTS_NOT_VALID,J.* FROM QSYS2.USER_INFO J WHERE J.SIGN_ON_ATTEMPTS_NOT_VALID > 0;",
         "payloadType": "str",
-        "x": 230,
-        "y": 680,
+        "x": 210,
+        "y": 600,
         "wires": [
             [
                 "bf86cdad.f71dd8"
@@ -745,12 +726,12 @@
     {
         "id": "bf86cdad.f71dd8",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 489,
-        "y": 663,
+        "x": 469,
+        "y": 583,
         "wires": [
             [
                 "95f29be0.da758"
@@ -760,15 +741,15 @@
     {
         "id": "95f29be0.da758",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Prepare Data",
         "func": "var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.SIGN_ON_ATTEMPTS_NOT_VALID));\n    m.labels.push(row.AUTHORIZATION_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Invalid Sign on Attempts\");\n\nreturn {payload:[m]};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 685,
-        "y": 638,
+        "x": 665,
+        "y": 558,
         "wires": [
             [
                 "b0549f58.c987f8"
@@ -778,7 +759,7 @@
     {
         "id": "b0549f58.c987f8",
         "type": "ui_chart",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "group": "24152ea0.f54a12",
         "order": 5,
@@ -810,10 +791,9 @@
             "#9467bd",
             "#c5b0d5"
         ],
-        "useOldStyle": false,
         "outputs": 1,
-        "x": 929,
-        "y": 618,
+        "x": 909,
+        "y": 538,
         "wires": [
             []
         ]
@@ -821,7 +801,7 @@
     {
         "id": "61431b3.6c9d7e4",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Top 10 Spool Storage consumers",
         "props": [
             {
@@ -839,8 +819,8 @@
         "topic": "Spool",
         "payload": "SELECT USER_NAME, SUM(SIZE) AS TOTAL_SPOOL_SPACE   FROM QSYS2.OUTPUT_QUEUE_ENTRIES_BASIC   WHERE USER_NAME NOT LIKE 'Q%'   GROUP BY USER_NAME   ORDER BY TOTAL_SPOOL_SPACE DESC LIMIT 10;",
         "payloadType": "str",
-        "x": 220,
-        "y": 740,
+        "x": 200,
+        "y": 660,
         "wires": [
             [
                 "85ac6f67.a832e"
@@ -850,12 +830,12 @@
     {
         "id": "85ac6f67.a832e",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": true,
-        "x": 489,
-        "y": 723,
+        "x": 469,
+        "y": 643,
         "wires": [
             [
                 "e4f62648.fcc1d8"
@@ -865,15 +845,15 @@
     {
         "id": "e4f62648.fcc1d8",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Prepare Data",
         "func": "var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TOTAL_SPOOL_SPACE));\n    m.labels.push(row.USER_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Spool storage usage\");\n\nreturn {payload:[m]};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 685,
-        "y": 698,
+        "x": 665,
+        "y": 618,
         "wires": [
             [
                 "e239a2af.a1a848"
@@ -883,7 +863,7 @@
     {
         "id": "e239a2af.a1a848",
         "type": "ui_chart",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "group": "24152ea0.f54a12",
         "order": 4,
@@ -915,10 +895,9 @@
             "#9467bd",
             "#c5b0d5"
         ],
-        "useOldStyle": false,
         "outputs": 1,
-        "x": 919,
-        "y": 678,
+        "x": 899,
+        "y": 598,
         "wires": [
             []
         ]
@@ -926,7 +905,7 @@
     {
         "id": "1871f86b.a0f8b8",
         "type": "inject",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Work Problem",
         "props": [
             {
@@ -940,8 +919,8 @@
         "topic": "",
         "payload": "select COUNT(wsxpid) as System_Problem FROM QUSRSYS.QASXPROB WHERE WSXPST <> 'C';",
         "payloadType": "str",
-        "x": 280,
-        "y": 220,
+        "x": 260,
+        "y": 140,
         "wires": [
             [
                 "2e30d04d.c3b"
@@ -951,12 +930,12 @@
     {
         "id": "2e30d04d.c3b",
         "type": "DB2 for i",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "mydb": "1ffd3699.664899",
         "name": "Local_DB",
         "arraymode": false,
-        "x": 463,
-        "y": 192,
+        "x": 443,
+        "y": 112,
         "wires": [
             [
                 "f7d9a1b1.cdd008"
@@ -966,7 +945,7 @@
     {
         "id": "c39d603b.aaaa98",
         "type": "ui_switch",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "label": "Work Problem Status",
         "tooltip": "Warning Sign means there is an issue on the system. Type WRKPRB on a command line to review.",
@@ -986,8 +965,8 @@
         "offvalueType": "num",
         "officon": "check",
         "offcolor": "green",
-        "x": 900,
-        "y": 140,
+        "x": 880,
+        "y": 60,
         "wires": [
             []
         ]
@@ -995,15 +974,15 @@
     {
         "id": "f7d9a1b1.cdd008",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "func": "var value = parseInt(msg.payload.SYSTEM_PROBLEM);\nreturn {payload:value};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 640,
-        "y": 160,
+        "x": 620,
+        "y": 80,
         "wires": [
             [
                 "c39d603b.aaaa98"
@@ -1013,7 +992,7 @@
     {
         "id": "46f98921.4c48a8",
         "type": "ui_text",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "e348f2a4.8e18d8",
         "order": 4,
         "width": 0,
@@ -1022,40 +1001,14 @@
         "label": "",
         "format": "Subsystems",
         "layout": "row-left",
-        "x": 670,
-        "y": 220,
+        "x": 650,
+        "y": 140,
         "wires": []
-    },
-    {
-        "id": "69c2531.cee4cac",
-        "type": "summariser",
-        "z": "6e7a53d8.25db7c",
-        "name": "",
-        "input": "payload",
-        "inputType": "msg",
-        "output": "payload",
-        "label": "",
-        "topic": "",
-        "outputs": 1,
-        "rules": [
-            {
-                "field": "ELAPSED_CPU_PERCENTAGE",
-                "op": "sum",
-                "sep": ","
-            }
-        ],
-        "x": 670,
-        "y": 420,
-        "wires": [
-            [
-                "2e5713bb.bf9444"
-            ]
-        ]
     },
     {
         "id": "2e5713bb.bf9444",
         "type": "ui_gauge",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "Total CPU",
         "group": "e348f2a4.8e18d8",
         "order": 3,
@@ -1074,14 +1027,14 @@
         ],
         "seg1": "70",
         "seg2": "90",
-        "x": 890,
-        "y": 400,
+        "x": 870,
+        "y": 320,
         "wires": []
     },
     {
         "id": "8e2725af.62e058",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1090,22 +1043,22 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 980,
-        "y": 1020,
+        "x": 960,
+        "y": 940,
         "wires": []
     },
     {
         "id": "40df2421.4455b4",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "func": "msg.chgcmd = 'CHGUSRPRF USRPRF(' + msg.payload.AUTHORIZATION_NAME + ') ' +\n              'STATUS(*ENABLED)';\n\n//msg.payload = \"SELECT NO_PASSWORD_INDICATOR \" +\n//              \"FROM QSYS2.USER_INFO  WHERE AUTHORIZATION_NAME = UCASE('\" +\n//               msg.payload.context.userprf + \"')\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 960,
-        "y": 1080,
+        "x": 940,
+        "y": 1000,
         "wires": [
             [
                 "bc9d080b.330158",
@@ -1116,15 +1069,15 @@
     {
         "id": "5a030a1d.55f5f4",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "func": "var pwdrd = ' PASSWORD(' + msg.payload + ')\"';\n\nmsg.payload = '\"' + msg.chgcmd + '' + pwdrd.replace(/^\"(.*)\"$/, '$1') + '';\ndelete msg.chgcmd;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1160,
-        "y": 1100,
+        "x": 1140,
+        "y": 1020,
         "wires": [
             [
                 "14942919.959c2f",
@@ -1135,7 +1088,7 @@
     {
         "id": "99b2242.8886a58",
         "type": "exec",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "command": "system -i",
         "addpay": true,
         "append": "",
@@ -1143,8 +1096,8 @@
         "timer": "120",
         "oldrc": false,
         "name": "Execute System Command",
-        "x": 1400,
-        "y": 1100,
+        "x": 1380,
+        "y": 1020,
         "wires": [
             [
                 "56e988da.cccc48",
@@ -1163,7 +1116,7 @@
     {
         "id": "bc9d080b.330158",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1172,14 +1125,14 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1190,
-        "y": 1020,
+        "x": 1170,
+        "y": 940,
         "wires": []
     },
     {
         "id": "11caa26d.5ac52e",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -1189,14 +1142,14 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1710,
-        "y": 1220,
+        "x": 1690,
+        "y": 1140,
         "wires": []
     },
     {
         "id": "56e988da.cccc48",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -1206,14 +1159,14 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1500,
-        "y": 980,
+        "x": 1480,
+        "y": 900,
         "wires": []
     },
     {
         "id": "2dd390a6.79d5b",
         "type": "ui_toast",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "position": "dialog",
         "displayTime": "20",
         "highlight": "",
@@ -1224,8 +1177,8 @@
         "raw": true,
         "topic": "Execution Status:",
         "name": "",
-        "x": 1750,
-        "y": 940,
+        "x": 1730,
+        "y": 860,
         "wires": [
             []
         ]
@@ -1233,15 +1186,15 @@
     {
         "id": "4c1fccbc.6998f4",
         "type": "function",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "func": "// call this GetRelevantIbmMessage instead of Function\n// Pipe msg to this\n// It will return 'This is the error message you're looking for' in msg.payload\nconst lines = msg.payload.split(\"\\n\");\nconst messages = [];\nlet parts = [];\nfor (const line of lines) {\n    parts = line.split(\":\");\n    messages.push({code: parts[0], message: parts[1]});\n}\nmsg.payload = messages[1].message.trim();\n\nreturn msg;\n\n\n//if (msg.payload.match(\"CPC2205([^\\:])*\")) {\n//    msg.payload = \"User Profile Enabled\"\n//} else {\n//    msg.payload = \"User Profile not Enabled. Check password and try again.\"\n//}\n\n//return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1660,
-        "y": 1140,
+        "x": 1640,
+        "y": 1060,
         "wires": [
             [
                 "11caa26d.5ac52e",
@@ -1252,7 +1205,7 @@
     {
         "id": "722ff4fb.515104",
         "type": "ui_text",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "27537136.147efe",
         "order": 3,
         "width": 0,
@@ -1261,14 +1214,14 @@
         "label": "",
         "format": "Job Queues with Active Jobs",
         "layout": "row-left",
-        "x": 1000,
-        "y": 900,
+        "x": 980,
+        "y": 820,
         "wires": []
     },
     {
         "id": "83d5c77e.2220f8",
         "type": "ui_text",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "27537136.147efe",
         "order": 5,
         "width": 0,
@@ -1277,14 +1230,14 @@
         "label": "",
         "format": "Job Queues with Jobs Waiting",
         "layout": "row-left",
-        "x": 1030,
-        "y": 960,
+        "x": 1010,
+        "y": 880,
         "wires": []
     },
     {
         "id": "9235df8f.7b0bb8",
         "type": "ui_text",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "27537136.147efe",
         "order": 7,
         "width": 0,
@@ -1293,14 +1246,14 @@
         "label": "",
         "format": "Disabled Users",
         "layout": "row-left",
-        "x": 740,
-        "y": 1060,
+        "x": 720,
+        "y": 980,
         "wires": []
     },
     {
         "id": "ccee0b6d.779f9",
         "type": "ui_text",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "group": "27537136.147efe",
         "order": 1,
         "width": 0,
@@ -1309,14 +1262,14 @@
         "label": "",
         "format": "Scheduled Jobs for Current Day",
         "layout": "row-left",
-        "x": 980,
-        "y": 840,
+        "x": 960,
+        "y": 760,
         "wires": []
     },
     {
         "id": "11a58edc.0973f9",
         "type": "ui_toast",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "position": "prompt",
         "displayTime": "3",
         "highlight": "",
@@ -1327,8 +1280,8 @@
         "raw": true,
         "topic": "Enter password and click okay to continue:",
         "name": "Enable User?",
-        "x": 820,
-        "y": 1140,
+        "x": 800,
+        "y": 1060,
         "wires": [
             [
                 "fb3bce44.59cf78",
@@ -1339,7 +1292,7 @@
     {
         "id": "fb3bce44.59cf78",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -1348,14 +1301,14 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 960,
-        "y": 1240,
+        "x": 940,
+        "y": 1160,
         "wires": []
     },
     {
         "id": "77c26371.f1ac1c",
         "type": "switch",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "OK?",
         "property": "payload",
         "propertyType": "msg",
@@ -1369,8 +1322,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1030,
-        "y": 1180,
+        "x": 1010,
+        "y": 1100,
         "wires": [
             [
                 "563f001e.4a8b38",
@@ -1381,7 +1334,7 @@
     {
         "id": "563f001e.4a8b38",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1390,14 +1343,14 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1190,
-        "y": 1220,
+        "x": 1170,
+        "y": 1140,
         "wires": []
     },
     {
         "id": "14942919.959c2f",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1406,14 +1359,14 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1390,
-        "y": 1180,
+        "x": 1370,
+        "y": 1100,
         "wires": []
     },
     {
         "id": "ae5474f6.7aac4",
         "type": "switch",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -1435,8 +1388,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 1820,
-        "y": 1120,
+        "x": 1800,
+        "y": 1040,
         "wires": [
             [
                 "27d245be.fba372"
@@ -1452,7 +1405,7 @@
     {
         "id": "27d245be.fba372",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1461,14 +1414,14 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2010,
-        "y": 1060,
+        "x": 1990,
+        "y": 980,
         "wires": []
     },
     {
         "id": "fc320146.094088",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1477,14 +1430,14 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2010,
-        "y": 1180,
+        "x": 1990,
+        "y": 1100,
         "wires": []
     },
     {
         "id": "b388dbd8.c90448",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1494,14 +1447,14 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1650,
-        "y": 1260,
+        "x": 1630,
+        "y": 1180,
         "wires": []
     },
     {
         "id": "5b58cca2.71f97c",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -1510,14 +1463,14 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1610,
-        "y": 1300,
+        "x": 1590,
+        "y": 1220,
         "wires": []
     },
     {
         "id": "951d8d3c.3d026",
         "type": "debug",
-        "z": "6e7a53d8.25db7c",
+        "z": "55102758.72fe98",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1526,14 +1479,55 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2010,
-        "y": 1120,
+        "x": 1990,
+        "y": 1040,
         "wires": []
+    },
+    {
+        "id": "d14a5b2a.ba60b8",
+        "type": "DB2 for i",
+        "z": "55102758.72fe98",
+        "mydb": "1ffd3699.664899",
+        "name": "Local_DB",
+        "arraymode": true,
+        "x": 460,
+        "y": 400,
+        "wires": [
+            [
+                "245059b9.fb47c6",
+                "69c2531.cee4cac"
+            ]
+        ]
+    },
+    {
+        "id": "69c2531.cee4cac",
+        "type": "summariser",
+        "z": "55102758.72fe98",
+        "name": "",
+        "input": "payload",
+        "inputType": "msg",
+        "output": "payload",
+        "label": "",
+        "topic": "",
+        "outputs": 1,
+        "rules": [
+            {
+                "field": "ELAPSED_CPU_PERCENTAGE",
+                "op": "sum",
+                "sep": ","
+            }
+        ],
+        "x": 650,
+        "y": 340,
+        "wires": [
+            [
+                "2e5713bb.bf9444"
+            ]
+        ]
     },
     {
         "id": "24152ea0.f54a12",
         "type": "ui_group",
-        "z": "",
         "name": "Top consumers",
         "tab": "ee3e419a.6e2d38",
         "order": 2,
@@ -1544,7 +1538,6 @@
     {
         "id": "e348f2a4.8e18d8",
         "type": "ui_group",
-        "z": "",
         "name": "Status",
         "tab": "ee3e419a.6e2d38",
         "order": 1,
@@ -1555,7 +1548,6 @@
     {
         "id": "1ffd3699.664899",
         "type": "DB2 for i Config",
-        "z": "",
         "cnnname": "SYSTEM",
         "db": "*LOCAL",
         "keepalive": true
@@ -1563,7 +1555,6 @@
     {
         "id": "27537136.147efe",
         "type": "ui_group",
-        "z": "",
         "name": "Table Data",
         "tab": "ee3e419a.6e2d38",
         "order": 3,
@@ -1574,7 +1565,6 @@
     {
         "id": "ee3e419a.6e2d38",
         "type": "ui_tab",
-        "z": "",
         "name": "LocalSys",
         "icon": "dashboard",
         "order": 2,
